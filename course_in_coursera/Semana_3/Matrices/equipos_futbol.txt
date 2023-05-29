@@ -1,0 +1,8 @@
+Ajax;0
+Juventus;1
+Manchester;2
+Barcelona;3
+Man City;4
+Tottenham;5
+Liverpool;6
+Porto;7
