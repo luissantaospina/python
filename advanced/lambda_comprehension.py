@@ -11,8 +11,8 @@ squares = list(map(lambda x: x ** 2, numbers))
 # Lambda with filter
 values = [2, 65, 67, 78, 98]
 peers = list(filter(lambda x: x % 2 == 0, values))
+peers_list_comprehension = [x for x in values if x % 2 == 0]
 
 # Lambda with reduce
 values_reduce = [2, 65, 67, 78, 98]
 sum_values = reduce(lambda x, y: x + y, values_reduce)
-print(sum_values)

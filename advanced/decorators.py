@@ -29,8 +29,8 @@ def split_string_decorator(function):
 
 
 @split_string_decorator
-@lowercase_decorator
 @uppercase_decorator
+@lowercase_decorator
 def say_hi():
     return "Hi Luis"
 
