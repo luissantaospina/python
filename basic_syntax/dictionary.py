@@ -1,4 +1,4 @@
-lineForNumber = {
+line_for_number = {
     0: 6,
     1: 2,
     2: 5,
@@ -11,8 +11,12 @@ lineForNumber = {
     9: 5
 }
 
-print(lineForNumber)
-print(lineForNumber.keys())
-print(lineForNumber.values())
-print(lineForNumber.items())
-print(lineForNumber[8])
+print(line_for_number)
+print(line_for_number.keys())
+print(line_for_number.values())
+print(line_for_number.items())
+print(line_for_number[8])
+print(len(line_for_number))
+
+# Eliminar un elemento por su llave
+del line_for_number[0]

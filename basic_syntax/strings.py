@@ -1,18 +1,18 @@
 name = 'luis'
-lastName = '''luis 
+last_name = '''luis 
     fernando'''
 
-nameWhitAge = 'luis {}'
+name_whit_age = 'luis {}'
 age = 27
 
 for i in name:
     print(i)
 
 print(len(name))  # longitud
-print(lastName)  # imprimir con salto
+print(last_name)  # imprimir con salto
 print(name * 3)  # imprimir en 3 veces
-print(name[3])  # acceder a una posicion
-print(name.upper())  # mayuscula
-print(name.lower())  # minuscula
+print(name[3])  # acceder a una posición
+print(name.upper())  # mayúscula
+print(name.lower())  # minúscula
 print(name.replace('u', 'o'))  # reemplaza una letra
-print(nameWhitAge.format(age))  # Dar formato a variable
+print(name_whit_age.format(age))  # Dar formato a variable

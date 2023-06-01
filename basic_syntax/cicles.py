@@ -8,8 +8,11 @@ for i in days:
 
 
 # While
-numberWhile = 1
+number_while = 1
 
-while numberWhile <= 10:
-    print(numberWhile) 
-    numberWhile += 1
+while number_while <= 10:
+    print(number_while)
+    number_while += 1
+
+else:
+    print(number_while)
