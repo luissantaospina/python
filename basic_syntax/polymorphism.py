@@ -12,6 +12,7 @@ class Father:
     def author(self):
         print('Autor')
 
+
 class Children(Father):
 
     def __init__(self, numero):
@@ -25,6 +26,7 @@ class Children(Father):
 
     def plus(self):
         print(self.numero + self.numero)
+
 
 post = Children(4)
 post.article()
