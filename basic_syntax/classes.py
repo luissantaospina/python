@@ -1,4 +1,8 @@
-class NumberOperations:
+class NumberOperation:
+    # Attrs of clases
+    name = 'hola'
+    email = ''
+
     def __init__(self, num):
         self.num = num
 
@@ -16,6 +20,10 @@ class NumberOperations:
             self.num += 1
 
 
-callClass = NumberOperations(0)
+callClass = NumberOperation(0)
 callClass.compare()
 callClass.cicle()
+
+hola = {1:2}
+
+print(hola.get(1))
