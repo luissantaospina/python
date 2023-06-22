@@ -1,2 +1,5 @@
 fastapi
 uvicorn[standard]
+peewee
+mysqlclient
+pydantic
