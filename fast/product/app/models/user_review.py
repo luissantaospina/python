@@ -1,4 +1,4 @@
-from peewee import *
+from peewee import Model, ForeignKeyField, DateTimeField, TextField, IntegerField
 from datetime import datetime
 from .database import database
 from .movie import Movie

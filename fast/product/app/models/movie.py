@@ -1,4 +1,4 @@
-from peewee import *
+from peewee import Model, CharField, DateTimeField
 from datetime import datetime
 from .database import database
 

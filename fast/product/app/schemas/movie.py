@@ -17,6 +17,7 @@ class MovieRequestModel(BaseModel):
 
 
 class MovieResponseModel(BaseModel):
+    id: int
     title: str
 
     class Config:
