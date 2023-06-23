@@ -1,10 +1,12 @@
 from fastapi import FastAPI
+from typing import List
 from models import database, User, Movie, UserReview
 from schemas import UserRequestModel, \
     MovieRequestModel, \
     UserReviewRequestModel, \
     UserResponseModel, \
-    UserReviewResponseModel
+    UserReviewResponseModel, \
+    MovieResponseModel
 
 app = FastAPI()
 
@@ -29,10 +31,10 @@ async def create_user(user: UserRequestModel):
         username=user.username,
         password=hash_password
     )
-    return UserResponseModel(id=user.id, username=user.username)
+    return user
 
 
-@app.post("/movies")
+@app.post("/movies", response_model=MovieResponseModel)
 async def create_movie(movie: MovieRequestModel):
     movie = Movie.create(
         title=movie.title
@@ -40,7 +42,7 @@ async def create_movie(movie: MovieRequestModel):
     return movie
 
 
-@app.post("/reviews")
+@app.post("/reviews", response_model=UserReviewResponseModel)
 async def create_review(review: UserReviewRequestModel):
     review = UserReview.create(
         movie_id=review.movie_id,
@@ -48,9 +50,16 @@ async def create_review(review: UserReviewRequestModel):
         review=review.review,
         score=review.score
     )
-    return UserReviewResponseModel(
-        id=review.id,
-        movie_id=review.movie_id,
-        review=review.review,
-        score=review.score
-    )
+    return review
+
+
+@app.get("/reviews", response_model=List[UserReviewResponseModel])
+async def get_reviews():
+    reviews = UserReview.select()
+    return [review for review in reviews]
+
+
+@app.get("/reviews/{review_id}", response_model=UserReviewResponseModel)
+async def get_review(review_id: int):
+    review = UserReview.select().where(UserReview.id == review_id).first()
+    return review
