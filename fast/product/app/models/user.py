@@ -21,3 +21,14 @@ class User(Model):
         hash_lib = hashlib.md5()
         hash_lib.update(password.encode('utf-8'))
         return hash_lib.hexdigest()
+
+    @classmethod
+    def authenticate(cls, username: str, password: str):
+        password = User.create_password(password)
+        user = cls.select()\
+            .where(User.username == username) \
+            .where(User.password == password) \
+            .first()
+
+        if user:
+            return user
