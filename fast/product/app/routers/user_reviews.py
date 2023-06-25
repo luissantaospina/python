@@ -6,6 +6,8 @@ from ..schemas import UserReviewRequestModel, \
     UserReviewRequestPutModel
 from fastapi import APIRouter, HTTPException, status, Depends
 from ..helpers import oauth_schema
+from ..models import User
+from ..helpers import get_current_user
 
 router = APIRouter(prefix='/reviews')
 
@@ -23,10 +25,10 @@ def validate_review(function):
 
 
 @router.post("", response_model=UserReviewResponseModel)
-async def create_review(review: UserReviewRequestModel, token: str = Depends(oauth_schema)):
+async def create_review(review: UserReviewRequestModel, user: User = Depends(get_current_user)):
     review = UserReview.create(
         movie_id=review.movie_id,
-        user_id=review.user_id,
+        user_id=user.id,
         review=review.review,
         score=review.score
     )

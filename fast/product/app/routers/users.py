@@ -1,13 +1,14 @@
 from ..models import User
 from ..schemas import UserRequestModel, UserResponseModel
-from fastapi import APIRouter, HTTPException
+from fastapi import APIRouter, HTTPException, Depends
+from ..helpers import oauth_schema
 from fastapi.security import HTTPBasicCredentials
 
 router = APIRouter(prefix='/users')
 
 
 @router.post("", response_model=UserResponseModel)
-async def create_user(user: UserRequestModel):
+async def create_user(user: UserRequestModel, token: str = Depends(oauth_schema)):
     hash_password = User.create_password(user.password)
     user = User.create(
         username=user.username,

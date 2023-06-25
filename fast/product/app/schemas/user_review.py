@@ -14,7 +14,6 @@ class PeeweeGetterDict(GetterDict):
 
 
 class UserReviewRequestModel(BaseModel):
-    user_id: int
     movie_id: int
     review: str
     score: float
