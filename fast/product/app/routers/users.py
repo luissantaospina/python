@@ -7,7 +7,7 @@ from fastapi.security import HTTPBasicCredentials
 router = APIRouter(prefix='/users')
 
 
-@router.post("", response_model=UserResponseModel)
+@router.post("", response_model=UserResponseModel, tags=["users"])
 async def create_user(user: UserRequestModel, token: str = Depends(oauth_schema)):
     hash_password = User.create_password(user.password)
     user = User.create(
@@ -17,7 +17,7 @@ async def create_user(user: UserRequestModel, token: str = Depends(oauth_schema)
     return user
 
 
-@router.post("/login", response_model=UserResponseModel)
+@router.post("/login", response_model=UserResponseModel, tags=["users"])
 async def login(credentials: HTTPBasicCredentials):
     password = User.create_password(credentials.password)
     user = User.select()\

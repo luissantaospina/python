@@ -6,7 +6,7 @@ from ..helpers import oauth_schema
 router = APIRouter(prefix='/movies')
 
 
-@router.post("", response_model=MovieResponseModel)
+@router.post("", response_model=MovieResponseModel, tags=["movies"])
 async def create_movie(movie: MovieRequestModel, token: str = Depends(oauth_schema)):
     movie = Movie.create(
         title=movie.title

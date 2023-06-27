@@ -4,6 +4,8 @@ from .routers import user_router, movie_router, user_review_router, auth_router
 from .helpers import create_access_token
 
 app = FastAPI()
+app.title = "My first API"
+app.version = "0.0.2"
 api_v1 = APIRouter(prefix='/api/v1')
 api_v1.include_router(user_router)
 api_v1.include_router(user_review_router)
