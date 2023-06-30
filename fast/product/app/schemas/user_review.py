@@ -1,4 +1,4 @@
-from pydantic import BaseModel, validator
+from pydantic import BaseModel, validator, Field
 from pydantic.utils import GetterDict
 from typing import Any
 from peewee import ModelSelect
@@ -14,26 +14,26 @@ class PeeweeGetterDict(GetterDict):
 
 
 class UserReviewRequestModel(BaseModel):
-    user_id: int
     movie_id: int
-    review: str
-    score: float
+    review: str = Field(max_length=10, min_length=2)
+    score: int = Field(le=5, ge=1)
 
-    @validator('score')
-    @classmethod
-    def validate_score(cls, score: float) -> float:
-        if score < 1:
-            raise ValueError('El score debe ser mayor o igual a 1')
-        if score > 5:
-            raise ValueError('El score debe ser menor o igual a 5')
-
-        return score
+    class Config:
+        # Add example to schema
+        schema_extra = {
+            "example": {
+                "movie_id": 6,
+                "review": "The movie was fine",
+                "score": 4
+            }
+        }
 
 
 class UserReviewRequestPutModel(BaseModel):
     review: str
     score: float
 
+    # custom validation
     @validator('score')
     @classmethod
     def validate_score(cls, score: float) -> float:
@@ -54,3 +54,15 @@ class UserReviewResponseModel(BaseModel):
     class Config:
         orm_mode = True
         getter_dict = PeeweeGetterDict
+        # Add example to schema
+        schema_extra = {
+            "example": {
+                "id": 1,
+                "movie": {
+                    "id": 1,
+                    "title": "titanic"
+                },
+                "review": "The movie was fine",
+                "score": 4
+            }
+        }

@@ -1,23 +1,16 @@
-from fastapi import FastAPI, APIRouter, Depends, HTTPException, status
+from fastapi import FastAPI, APIRouter
 from .models import database, User, Movie, UserReview
-from .routers import user_router, movie_router, user_review_router
-from fastapi.security import OAuth2PasswordRequestForm
+from .routers import user_router, movie_router, user_review_router, auth_router
 from .helpers import create_access_token
 
 app = FastAPI()
+app.title = "My first API"
+app.version = "0.0.2"
 api_v1 = APIRouter(prefix='/api/v1')
 api_v1.include_router(user_router)
 api_v1.include_router(user_review_router)
 api_v1.include_router(movie_router)
-
-
-@api_v1.post('/auth')
-async def auth(data: OAuth2PasswordRequestForm = Depends()):
-    user = User.authenticate(data.username, data.password)
-    if not user:
-        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail='Unauthorized')
-    return {'access_token': create_access_token(user), 'token_type': 'Bearer'}
-
+api_v1.include_router(auth_router)
 app.include_router(api_v1)
 
 
