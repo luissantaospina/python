@@ -2,8 +2,8 @@ from peewee import MySQLDatabase
 
 database = MySQLDatabase(
     'product-fast',
-    user='root',
-    password='',
-    host='localhost',
+    user='user',
+    password='pas',
+    host='local.fast-db',
     port=3306
 )

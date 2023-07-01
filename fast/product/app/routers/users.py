@@ -8,7 +8,7 @@ router = APIRouter(prefix='/users')
 
 
 @router.post("", response_model=UserResponseModel, tags=["users"])
-async def create_user(user: UserRequestModel, token: str = Depends(oauth_schema)):
+async def create_user(user: UserRequestModel):
     hash_password = User.create_password(user.password)
     user = User.create(
         username=user.username,

@@ -31,7 +31,7 @@ async def create_review(review: UserReviewRequestModel, user: User = Depends(get
         user_id=user.id,
         review=review.review,
         score=review.score
-    )cd
+    )
     return review
 
 
