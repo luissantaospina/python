@@ -1,6 +1,5 @@
 import functools
 from typing import List
-from ..models import UserReview
 from ..schemas import UserReviewRequestModel, \
     UserReviewResponseModel, \
     UserReviewRequestPutModel
@@ -9,6 +8,7 @@ from ..helpers import oauth_schema
 from ..models import User
 from ..helpers import get_current_user
 from ..services import UserReviewService
+from ..repositories import UserReviewRepository
 
 router = APIRouter(prefix='/reviews')
 
@@ -16,7 +16,7 @@ router = APIRouter(prefix='/reviews')
 def validate_review(function):
     @functools.wraps(function)
     def wrapper(review_id: int, token: str):
-        review = UserReview.select().where(UserReview.id == review_id).first()
+        review = UserReviewRepository.get(review_id)
         if not review:
             raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail='Review not found')
 
@@ -46,6 +46,7 @@ def get_review(review_id: int = Path(ge=1), token: str = Depends(oauth_schema)) 
     return review
 
 
+# TODO: Validate review
 @router.put("/{review_id}", response_model=UserReviewResponseModel, tags=["reviews"])
 async def update_review(review_request: UserReviewRequestPutModel, review_id: int = Path(ge=1),
                         token: str = Depends(oauth_schema)) -> UserReviewResponseModel:
