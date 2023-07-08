@@ -10,7 +10,7 @@ from ..helpers import get_current_user
 from ..services import UserReviewService
 from ..repositories import UserReviewRepository
 
-router = APIRouter(prefix='/reviews')
+router = APIRouter(prefix='/reviews', tags=["reviews"])
 
 
 def validate_review(function):
@@ -25,21 +25,21 @@ def validate_review(function):
     return wrapper
 
 
-@router.post("", response_model=UserReviewResponseModel, tags=["reviews"])
+@router.post("", response_model=UserReviewResponseModel)
 async def create_review(review: UserReviewRequestModel, user: User = Depends(get_current_user))\
         -> UserReviewResponseModel:
     review_created = UserReviewService.create_review(review, user)
     return review_created
 
 
-@router.get("", response_model=List[UserReviewResponseModel], tags=["reviews"])
+@router.get("", response_model=List[UserReviewResponseModel])
 async def get_reviews(page: int = 1, limit: int = 10, token: str = Depends(oauth_schema))\
         -> List[UserReviewResponseModel]:
     reviews = UserReviewService.get_reviews(page, limit)
     return [review for review in reviews]
 
 
-@router.get("/{review_id}", response_model=UserReviewResponseModel, tags=["reviews"])
+@router.get("/{review_id}", response_model=UserReviewResponseModel)
 @validate_review
 def get_review(review_id: int = Path(ge=1), token: str = Depends(oauth_schema)) -> UserReviewResponseModel:
     review = UserReviewService.get_review(review_id)
@@ -47,7 +47,7 @@ def get_review(review_id: int = Path(ge=1), token: str = Depends(oauth_schema)) 
 
 
 # TODO: Validate review
-@router.put("/{review_id}", response_model=UserReviewResponseModel, tags=["reviews"])
+@router.put("/{review_id}", response_model=UserReviewResponseModel)
 async def update_review(review_request: UserReviewRequestPutModel, review_id: int = Path(ge=1),
                         token: str = Depends(oauth_schema)) -> UserReviewResponseModel:
     review_updated = UserReviewService.update_review(review_request, review_id)
@@ -55,7 +55,7 @@ async def update_review(review_request: UserReviewRequestPutModel, review_id: in
 
 
 # with Path validate the route params
-@router.delete("/{review_id}", response_model=UserReviewResponseModel, tags=["reviews"])
+@router.delete("/{review_id}", response_model=UserReviewResponseModel)
 @validate_review
 def delete_review(review_id: int = Path(ge=1), token: str = Depends(oauth_schema)) -> UserReviewResponseModel:
     review_deleted = UserReviewService.delete_review(review_id)

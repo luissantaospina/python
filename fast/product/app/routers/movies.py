@@ -6,7 +6,7 @@ from ..helpers import oauth_schema
 from ..services import MovieService
 from ..repositories import MovieRepository
 
-router = APIRouter(prefix='/movies')
+router = APIRouter(prefix='/movies', tags=["movies"])
 
 
 def validate_movie(function):
@@ -27,14 +27,14 @@ async def create_movie(movie: MovieRequestModel, token: str = Depends(oauth_sche
     return movie_created
 
 
-@router.get("", response_model=List[MovieResponseModel], tags=["movies"])
+@router.get("", response_model=List[MovieResponseModel])
 async def get_movies(page: int = 1, limit: int = 10, token: str = Depends(oauth_schema)) \
         -> List[MovieResponseModel]:
     movies = MovieService.get_movies(page, limit)
     return [movie for movie in movies]
 
 
-@router.get("/{movie_id}", response_model=MovieResponseModel, tags=["movies"])
+@router.get("/{movie_id}", response_model=MovieResponseModel)
 @validate_movie
 def get_movie(movie_id: int = Path(ge=1), token: str = Depends(oauth_schema)) -> MovieResponseModel:
     movie = MovieService.get_movie(movie_id)
@@ -42,14 +42,14 @@ def get_movie(movie_id: int = Path(ge=1), token: str = Depends(oauth_schema)) ->
 
 
 # TODO: Validate movie
-@router.put("/{movie_id}", response_model=MovieResponseModel, tags=["movies"])
+@router.put("/{movie_id}", response_model=MovieResponseModel)
 async def update_movie(movie_request: MovieRequestModel, movie_id: int = Path(ge=1),
                        token: str = Depends(oauth_schema)) -> MovieResponseModel:
     movie_updated = MovieService.update_movie(movie_request, movie_id)
     return movie_updated
 
 
-@router.delete("/{movie_id}", response_model=MovieResponseModel, tags=["movies"])
+@router.delete("/{movie_id}", response_model=MovieResponseModel)
 @validate_movie
 def delete_movie(movie_id: int = Path(ge=1), token: str = Depends(oauth_schema)) -> MovieResponseModel:
     movie_deleted = MovieService.delete_movie(movie_id)

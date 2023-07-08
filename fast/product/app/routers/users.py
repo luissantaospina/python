@@ -4,16 +4,16 @@ from fastapi import APIRouter, HTTPException
 from fastapi.security import HTTPBasicCredentials
 from ..services import UserService
 
-router = APIRouter(prefix='/users')
+router = APIRouter(prefix='/users', tags=["users"])
 
 
-@router.post("", response_model=UserResponseModel, tags=["users"])
+@router.post("", response_model=UserResponseModel)
 async def create_user(user: UserRequestModel) -> UserResponseModel:
     user_created = UserService.create_user(user)
     return user_created
 
 
-@router.post("/login", response_model=UserResponseModel, tags=["users"])
+@router.post("/login", response_model=UserResponseModel)
 async def login(credentials: HTTPBasicCredentials):
     password = User.create_password(credentials.password)
     user = User.select()\

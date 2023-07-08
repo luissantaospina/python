@@ -6,10 +6,10 @@ from fastapi import APIRouter
 
 from ..schemas import UserResponseModel
 
-router = APIRouter(prefix='/auth')
+router = APIRouter(prefix='/auth', tags=["auth"])
 
 
-@router.post('', tags=["auth"])
+@router.post('')
 async def auth(data: OAuth2PasswordRequestForm = Depends()):
     user = User.authenticate(data.username, data.password)
     if not user:
@@ -17,6 +17,6 @@ async def auth(data: OAuth2PasswordRequestForm = Depends()):
     return {'access_token': create_access_token(user), 'token_type': 'Bearer'}
 
 
-@router.get('', response_model=UserResponseModel, tags=["auth"])
+@router.get('', response_model=UserResponseModel)
 async def get_user_from_token(user: User = Depends(get_current_user)):
     return user
