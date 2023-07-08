@@ -3,7 +3,6 @@ from ..models import User
 from fastapi.security import OAuth2PasswordRequestForm
 from ..helpers import create_access_token, get_current_user
 from fastapi import APIRouter
-
 from ..schemas import UserResponseModel
 
 router = APIRouter(prefix='/auth', tags=["auth"])
