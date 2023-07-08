@@ -26,6 +26,14 @@ class UserRequestModel(BaseModel):
 
         return username
 
+    class Config:
+        schema_extra = {
+            "example": {
+                "username": 'Fernando',
+                "password": "secret"
+            }
+        }
+
 
 class UserResponseModel(BaseModel):
     id: int

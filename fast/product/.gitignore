@@ -10,6 +10,7 @@ database/
 # Dependencias y entorno virtual (puedes ajustar esto según tu caso)
 venv/
 .env/
+mysql-data/
 
 # Archivos de compilación
 *.pyc
@@ -47,6 +48,7 @@ bin/
 *.iml
 *.ipr
 *.iws
+.env
 
 # Directorios de compilación de Gradle
 .gradle/

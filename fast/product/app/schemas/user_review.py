@@ -15,14 +15,14 @@ class PeeweeGetterDict(GetterDict):
 
 class UserReviewRequestModel(BaseModel):
     movie_id: int
-    review: str = Field(max_length=10, min_length=2)
+    review: str = Field(max_length=50, min_length=5)
     score: int = Field(le=5, ge=1)
 
     class Config:
         # Add example to schema
         schema_extra = {
             "example": {
-                "movie_id": 6,
+                "movie_id": 1,
                 "review": "The movie was fine",
                 "score": 4
             }
