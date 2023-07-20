@@ -1,8 +1,14 @@
 from fastapi import FastAPI, APIRouter
-from .models import database, User, Movie, UserReview
 from .routers import user_router, movie_router, user_review_router, auth_router
 from .middlewares import ErrorHandler
 from fastapi.middleware.cors import CORSMiddleware
+from mangum import Mangum
+from .database import engine
+from .models_sql import Movie, User
+
+Movie.metadata.create_all(bind=engine)
+User.metadata.create_all(bind=engine)
+
 
 app = FastAPI()
 app.title = "My first API"
@@ -24,15 +30,4 @@ api_v1.include_router(movie_router)
 api_v1.include_router(auth_router)
 app.include_router(api_v1)
 
-
-@app.on_event('startup')
-def startup():
-    if database.is_closed():
-        database.connect()
-    database.create_tables([User, Movie, UserReview])
-
-
-@app.on_event('shutdown')
-def shutdown():
-    if not database.is_closed():
-        database.close()
+handler = Mangum(app)
