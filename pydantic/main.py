@@ -22,7 +22,7 @@ class User(BaseModel):
     @classmethod
     def password_validation(cls, repeat_password: str, values: dict) -> str:
         if 'password' in values and repeat_password != values['password']:
-            raise ValueError('La contraseñas son diferentes')
+            raise ValueError('Las contraseñas son diferentes')
 
         return repeat_password
 
