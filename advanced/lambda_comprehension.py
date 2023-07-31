@@ -1,6 +1,5 @@
 from functools import reduce
 
-
 # Lambda
 square = lambda x: x ** 2
 
