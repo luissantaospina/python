@@ -18,7 +18,7 @@ def http_error(status):
             return "No encontrado"
         case 500:
             return "Error en el servidor"
-        case _:  # defaul
+        case _:  # default
             return "Algo anda mal en internet"
 
 
